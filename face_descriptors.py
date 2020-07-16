@@ -6,6 +6,11 @@ from matplotlib.patches import Rectangle
 
 
 def run_new_image(model):
+    """
+    Takes a picture using the computer camera and then processes the image using MTCNN and FaceNet
+    :param model: the FaceNet model
+    :return: the descriptor array, the shape of the array
+    """
     pic = take_picture()
     boxes = show_boxes(model, pic)
     descriptors = model.compute_descriptors(pic, boxes)
@@ -13,6 +18,12 @@ def run_new_image(model):
 
 
 def run_loaded_image(model, path):
+    """
+    Loads a picture and then processes the image using MTCNN and FaceNet
+    :param model: the FaceNet model
+    :param path: the path for the image file
+    :return: the descriptor array, the shape of the array
+    """
     pic = plt.imread(path)
     boxes = show_boxes(model, pic)
     descriptors = model.compute_descriptors(pic, boxes)
@@ -20,6 +31,12 @@ def run_loaded_image(model, path):
 
 
 def show_boxes(model, pic):
+    """
+    Plots the image with the boxes applied and returns the boxes needed to compute the descriptors
+    :param model: the FaceNet model
+    :param pic: the picture to be processed
+    :return: the boxes (detected faces)
+    """
     fig, ax = plt.subplots()
     ax.imshow(pic)
 
@@ -34,4 +51,5 @@ def show_boxes(model, pic):
         for i in range(len(landmark)):
             ax.plot(landmark[i, 0], landmark[i, 1], '+', color="blue")
 
+    plt.show()
     return boxes
