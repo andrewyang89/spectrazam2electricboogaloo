@@ -5,13 +5,16 @@ from facenet_models import FacenetModel
 from matplotlib.patches import Rectangle
 
 
-def run_new_image(model):
+def run_loaded_image(model, path):
     """
-    Takes a picture using the computer camera and then processes the image using MTCNN and FaceNet
+    Loads a picture and then processes the image using MTCNN and FaceNet
     :param model: the FaceNet model
+    :param path: the path for the image file
     :return: the descriptor array, the shape of the array
     """
-    pic = take_picture()
+    pic = plt.imread(path)
+    if pic.shape[-1] > 4:
+        pic = pic[:, :, :3]
     boxes = show_boxes(model, pic)
     descriptors = model.compute_descriptors(pic, boxes)
     return descriptors, descriptors.shape
