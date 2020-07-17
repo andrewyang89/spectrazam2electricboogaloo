@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def match(new_descriptor, cutoff_value):
     """
     Matches an unknown descriptor value with a name from the database.
