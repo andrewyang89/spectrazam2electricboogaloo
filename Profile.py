@@ -1,3 +1,5 @@
+import numpy as np
+
 class Profile:
     """
     Defines a profile for a face, including the respective face label and the
@@ -47,7 +49,7 @@ class Profile:
         """
 
         self.d_vectors = np.append(self.d_vectors, d_vectors_in, axis=0)
-        self.d_mean = np.sum(d_vectors, axis=0) / len(d_vectors)
+        self.d_mean = np.sum(self.d_vectors, axis=0) / len(self.d_vectors)
 
 
     @property
