@@ -1,10 +1,7 @@
 # get_ipython().run_line_magic('matplotlib', 'notebook')
 import matplotlib.pyplot as plt
-from camera import take_picture
-from facenet_models import FacenetModel
 from matplotlib.patches import Rectangle
 import match_face
-import database as db
 
 def run_loaded_image(model, path):
     """
@@ -97,19 +94,6 @@ def show_boxes_labels(model, pic, cutoff):
     plt.show()
     return unknown_counter, unk_descriptors
 
-
-def prompt_unknown(num_unknown, unk_descriptors, database_name):
-    """
-    Prompts the user to name unknown faces
-    :param num_unknown: the number of unknown faces
-    :param unk_descriptors: the list of unknown descriptors
-    :param database_name: the path of the database
-    :return: nothing
-    """
-    for num in range(num_unknown):
-        print(f"Enter the name of Unknown{num}:")
-        name = str(input())
-        db.add_profile(name, unk_descriptors[num], database_name)
 
 
 
