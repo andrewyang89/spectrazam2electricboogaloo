@@ -1,5 +1,7 @@
-import numpy as np
+filename = 'database.npy'
 
+with open(filename, mode="rb") as opened_file:
+        database = pickle.load(opened_file)
 
 def match(new_descriptor, cutoff_value):
     """
@@ -17,17 +19,24 @@ def match(new_descriptor, cutoff_value):
     name: String
         Name of identified person, None if no person is identified
     """
-    database_means = np.array(list(database.values()))
+    # Loading the mean vectors into a list
+    database_means = []  
+    for profile in database.values():
+        database_means.append(profile.d_mean)
+    
+    # Loading the cos distances into a list
     distances = []  
     for d in database_means:
         distances.append(cos_dist(new_descriptor, d))
+    
+    # Calculating the minimum distance
     min_distance = np.min(distances)
     index = np.argmin(distances)
     names = list(database.keys())
+    
+    # Verifying that the minimum distance does not exceed threshold value,
+    # returning corresponding name or None
     if min_distance < cutoff_value:
         return names[index]
     else:
         return None
-
-    
-
