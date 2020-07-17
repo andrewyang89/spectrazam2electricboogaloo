@@ -1,7 +1,6 @@
 # get_ipython().run_line_magic('matplotlib', 'notebook')
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
-import match_face
 import camera
 
 

@@ -1,5 +1,5 @@
 import numpy as np
-from cosine_dist import cos_dist
+from .cosine_dist import cos_dist
 import pickle
 
 

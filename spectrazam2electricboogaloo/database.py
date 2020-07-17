@@ -1,8 +1,8 @@
 import numpy as np
 import os
 import pickle
-from face_descriptors import run_loaded_image, show_boxes
-from Profile import Profile
+from .face_descriptors import run_loaded_image, show_boxes
+from .Profile import Profile
 
 
 def create_database(model, images_dir, filename):

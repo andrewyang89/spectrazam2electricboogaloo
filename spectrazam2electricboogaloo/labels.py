@@ -1,9 +1,9 @@
 from matplotlib.patches import Rectangle
 
-import database as db
+from . import database as db
 import matplotlib.pyplot as plt
 
-import match_face
+from spectrazam2electricboogaloo import match_face
 
 
 def show_boxes_labels(model, path, cutoff, database):

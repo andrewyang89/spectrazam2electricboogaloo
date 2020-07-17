@@ -1,8 +1,8 @@
-import face_descriptors
 from facenet_models import FacenetModel
-import labels
 import pickle
 
+from . import labels
+from . import face_descriptors
 
 def run(pic_path, database):
     """
