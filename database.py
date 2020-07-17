@@ -1,7 +1,8 @@
 import numpy as np
 import os
 import pickle
-from face_descriptors import run_loaded_image
+from face_descriptors import run_loaded_image, show_boxes
+from Profile import Profile
 
 
 def create_database(model, images_dir, filename):
@@ -22,12 +23,18 @@ def create_database(model, images_dir, filename):
     """
     images = {}
     for name in os.listdir(images_dir):
-        images[name] = os.listdir(images_dir + name + '/')
-    descriptors = {name : np.hstack(run_loaded_image(image)[0] for image in images[name]) for name in images}  # Temporary function name for getting descriptor from image
-        
-    profiles = [Profile(name) for name in descriptors]
-    for p in profiles:
-        p.add_descriptors(descriptors[p.name])  # Temp class attributes and function names
+        if not name[0] == '.':
+            images[name] = [x for x in os.listdir(images_dir + name + '/') if not x.startswith('.')]
+    print (images)
+    
+    descriptors = {name : np.concatenate([run_loaded_image(model, images_dir + name + '/' + image)[0] for image in images[name]]) for name in images}  # Temporary function name for getting descriptor from image                        
+    
+    print (descriptors)
+    for name in descriptors:
+        print (descriptors[name].shape)
+    
+    
+    profiles = [Profile(name, descriptors[name]) for name in descriptors]
         
     database = {}
     for p in profiles:
@@ -37,7 +44,7 @@ def create_database(model, images_dir, filename):
         pickle.dump(database, path) 
 
 
-def add_profile(name, descriptor, filename):
+def add_profile(model, name, image, filename):
     """
     Add profile of name and image to database
     
@@ -55,14 +62,15 @@ def add_profile(name, descriptor, filename):
     """
     with open(filename, mode='rb') as path:
         database = pickle.load(path)
-    # descriptor = run_loaded_image(model, image)
+    descriptor = run_loaded_image(model, image)
     
     if name in database:
-        database[name].add_descriptors(descriptor)
+        database[name].addVector(descriptor)
     else:
-        new_profile = Profile(name)
-        new_profile.add_descriptors(descriptor)
+        new_profile = Profile(name, descriptor)
         database[name] = new_profile
+    with open(filename, mode='wb') as path:
+        pickle.dump(database, path)
 
 
 def remove_profile(name, filename):
