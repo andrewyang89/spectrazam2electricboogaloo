@@ -15,9 +15,10 @@ class Profile:
                 The name of the owner of the input face and associated
                 descriptor vectors
 
-            d_vectors_in: list[np.ndarray]
-                A list of descriptor vectors for the given person derived from
-                images of their face
+            d_vectors_in: np.ndarray
+                A 2D array of descriptor vectors of shape (M, 512) to be
+                appended to the given Profile instance's descriptor vector
+                collection, where M is the number of added vectors
 
             Returns
             -------
