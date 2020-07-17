@@ -3,9 +3,6 @@ class Profile:
     Defines a profile for a face, including the respective face label and the
     mean descriptor vector of all associated descriptor vectors
     """
-    name = ""
-    d_vectors = np.empty((0, 512))
-    d_mean = np.empty(512,)
 
     def __init__(self, name: str, d_vectors_in):
         """Creates an instance of the Profile class
@@ -25,7 +22,8 @@ class Profile:
             None
 
         """
-
+        self.d_vectors = np.empty((0, 512))
+        self.d_mean = np.empty(512,)
         self.name = name
         self.addVector(d_vectors_in)
 
