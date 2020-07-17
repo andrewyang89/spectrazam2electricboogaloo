@@ -1,3 +1,5 @@
+import numpy as np
+
 class Profile:
     """
     Defines a profile for a face, including the respective face label and the
@@ -47,43 +49,4 @@ class Profile:
         """
 
         self.d_vectors = np.append(self.d_vectors, d_vectors_in, axis=0)
-        self.d_mean = np.sum(d_vectors, axis=0) / len(d_vectors)
-
-
-    @property
-    def mean_vector(self):
-        """Supplies the up-to-date Profile instance mean descriptor vector
-
-            Returns
-            -------
-            d_mean: np.ndarray, shape-(512,)
-                The mean vector of all Profile instance-associated descriptor
-                vectors
-        """
-        return self.d_mean
-
-
-    @property
-    def name(self):
-        """Supplies the up-to-date Profile instance name
-
-            Returns
-            -------
-            name: str
-                The associated name of the Profile instance
-        """
-        return self.name
-
-
-    @property
-    def vectors(self):
-        """Supplies the up-to-date Profile instance descriptor vectors
-            (all of them)
-
-            Returns
-            -------
-            d_vectors: np.ndarray, shape-(N, 512)
-                An array containing all input descriptor vectors for a given Profile
-                instance, where N is the number of input descriptor vectors
-        """
-        return self.d_vectors
+        self.d_mean = np.sum(self.d_vectors, axis=0) / len(self.d_vectors)
