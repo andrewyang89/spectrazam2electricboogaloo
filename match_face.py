@@ -1,9 +1,9 @@
-filename = 'database.npy'
+import numpy as np
+from cosine_dist import cos_dist
+import pickle
 
-with open(filename, mode="rb") as opened_file:
-        database = pickle.load(opened_file)
 
-def match(new_descriptor, cutoff_value):
+def match(new_descriptor, cutoff_value, filename):
     """
     Matches an unknown descriptor value with a name from the database.
     Parameters
@@ -20,6 +20,9 @@ def match(new_descriptor, cutoff_value):
         Name of identified person, None if no person is identified
     """
     # Loading the mean vectors into a list
+    with open(filename, mode="rb") as opened_file:
+        database = pickle.load(opened_file)
+
     database_means = []  
     for profile in database.values():
         database_means.append(profile.d_mean)

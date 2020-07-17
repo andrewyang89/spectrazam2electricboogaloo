@@ -12,4 +12,4 @@ def prompt_unknown(num_unknown, unk_descriptors, database_name):
     for num in range(num_unknown):
         print(f"Enter the name of Unknown{num}:")
         name = str(input())
-        db.add_profile(name, unk_descriptors[num], database_name)
+        db.add_profile(name, unk_descriptors[num].reshape(1,512), database_name)

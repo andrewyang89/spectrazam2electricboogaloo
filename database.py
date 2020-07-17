@@ -44,7 +44,7 @@ def create_database(model, images_dir, filename):
         pickle.dump(database, path) 
 
 
-def add_profile(model, name, image, filename):
+def add_profile(name, descriptor, filename):
     """
     Add profile of name and image to database
     
@@ -62,8 +62,7 @@ def add_profile(model, name, image, filename):
     """
     with open(filename, mode='rb') as path:
         database = pickle.load(path)
-    descriptor = run_loaded_image(model, image)
-    
+
     if name in database:
         database[name].addVector(descriptor)
     else:
