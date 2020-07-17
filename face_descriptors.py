@@ -58,44 +58,7 @@ def show_boxes(model, pic):
     return boxes
 
 
-def show_boxes_labels(model, path, cutoff, database):
-    """
-    Plots the image with the boxes and labels applied and returns the boxes needed to compute the descriptors
-    :param path: the path of the image
-    :param database: database
-    :param model: the FaceNet model
-    :param cutoff: the cutoff value for a face to be labeled
-    :return the number of unknowns and the array of descriptors for each unknown
-    """
-    fig, ax = plt.subplots()
-    pic = plt.imread(path)
-    ax.imshow(pic)
 
-    if pic.shape[-1] > 3:
-        pic = pic[:, :, :3]
-
-    boxes, probabilities, landmarks = model.detect(pic)
-    descriptors = model.compute_descriptors(pic, boxes)
-
-    unknown_counter = 0
-    unk_descriptors = []
-
-    counter = 0
-    zipped = list(zip(boxes, probabilities, landmarks))
-    for box, prob, landmark in zip(boxes, probabilities, landmarks):
-        # draw the box on the screen
-        ax.add_patch(Rectangle(box[:2], *(box[2:] - box[:2]), fill=None, lw=2, color="green"))
-        label = match_face.match(descriptors[counter], cutoff, database)
-        if label is None:
-            ax.annotate(f"Unknown{unknown_counter}", box[:2], color="red")
-            unk_descriptors.append(descriptors[counter])
-            unknown_counter += 1
-        else:
-            ax.annotate(label, box[:2], color="blue")
-
-        counter += 1
-    plt.show()
-    return unknown_counter, unk_descriptors
 
 
 
